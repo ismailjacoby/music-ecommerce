@@ -1,6 +1,6 @@
 <nav class="h-20 bg-white border-b px-6 flex items-center justify-around">
   <!-- Logo -->
-  <div class="text-xl font-bold text-neutral-800 uppercase">
+  <div class="text-xl font-bold text-neutral-800 uppercase cursor-pointer" [routerLink]="['/']">
     Keys <span class="text-yellow-400">&</span> Crates
   </div>
 
@@ -36,7 +36,7 @@
     </button>
 
     <!-- Account -->
-    <button aria-label="Account" class="cursor-pointer">
+    <button aria-label="Account" class="cursor-pointer" [routerLink]="['/auth/signup']">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hover:text-yellow-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
               d="M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM17.982 18.725A7.488

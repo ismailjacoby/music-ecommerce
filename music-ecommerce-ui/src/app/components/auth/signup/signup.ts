@@ -42,7 +42,7 @@ export class Signup implements OnInit{
         this.signupForm.reset();
         this.successMessage = response;
         this.errorMessage = '';
-        setTimeout(() => this.router.navigate(['/auth/login']), 2000);
+        setTimeout(() => this.router.navigate(['/auth/login']), 3000);
       }, error: (error) => {
         console.error(error);
         this.errorMessage = error.error.message || 'An unexpected error occurred. Please try again.';
