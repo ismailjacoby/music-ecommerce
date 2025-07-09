@@ -1,19 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Auth} from '../../../services/auth';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
+  standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
 })
 export class Signup implements OnInit{
-  signupForm: FormGroup = new FormGroup({});
-
   errorMessage: string = "";
   successMessage: string = "";
 
@@ -21,6 +21,7 @@ export class Signup implements OnInit{
   formBuilder = inject(FormBuilder);
   router = inject(Router);
 
+  signupForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({

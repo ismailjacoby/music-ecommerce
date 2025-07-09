@@ -1,0 +1,80 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="w-full max-w-md bg-white rounded-xl shadow-md p-6 space-y-6">
+    <!-- Title -->
+    <h2 class="text-2xl font-semibold text-center text-neutral-800">Login</h2>
+
+    <!-- Form -->
+    <form class="space-y-4" [formGroup]="loginForm" (ngSubmit)="login()">
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" placeholder="you@example.com"
+               formControlName="email"
+               class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent placeholder:opacity-40" />
+
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <div class="mt-1 text-xs text-red-600">
+            @if (loginForm.get('email')?.errors?.['required']) {
+              <p>Email is required.</p>
+            }
+            @if (loginForm.get('email')?.errors?.['email']) {
+              <p>Please enter a valid email address.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" placeholder="••••••••"
+               formControlName="password"
+               class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent placeholder:opacity-40" />
+
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <div class="mt-1 text-xs text-red-600">
+            @if (loginForm.get('password')?.errors?.['required']) {
+              <p>Password is required.</p>
+            }
+            @if (loginForm.get('password')?.errors?.['minlength']) {
+              <p>Password must be at least 8 characters long.</p>
+            }
+          </div>
+        }
+
+        <div class="mt-1 text-right">
+          <a routerLink="/auth/forgot-password" class="text-sm text-yellow-500 hover:underline cursor-pointer">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+              class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+
+    <!-- Feedback Messages -->
+    @if(successMessage || errorMessage){
+      <div class="pt-2">
+        @if (successMessage) {
+          <p class="text-center text-sm font-medium px-4 py-2 rounded-md text-green-700 bg-green-100 border border-green-300">
+            {{ successMessage }}
+          </p>
+        } @else if (errorMessage) {
+        <p class="text-center text-sm font-medium px-4 py-2 rounded-md text-red-700 bg-red-100 border border-red-300">
+          {{ errorMessage }}
+        </p>
+      }
+      </div>
+    }
+
+
+    <!-- Footer Links -->
+    <div class="text-center text-sm text-gray-600 pt-4">
+      Don't have an account?
+      <a [routerLink]="['/auth/signup']"  class="text-yellow-500 hover:underline cursor-pointer">Sign up here</a>
+    </div>
+  </div>
+</div>
