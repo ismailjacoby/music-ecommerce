@@ -33,6 +33,14 @@ public class GlobalExceptionHandler {
         return new ErrorResponseDTO("Invalid Argument", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    // InvalidTokenException
+    @ExceptionHandler(InvalidTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleInvalidTokenException(InvalidTokenException e) {
+        return new ErrorResponseDTO("Invalid Token", e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
     // MethodArgumentNotValidException (Validation errors)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

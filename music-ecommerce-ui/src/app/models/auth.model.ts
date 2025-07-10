@@ -9,6 +9,15 @@ export interface LoginForm {
   password: string
 }
 
+export interface ForgotPasswordForm {
+  email: string
+}
+
+export interface ResetPasswordForm {
+  token: string,
+  password: string
+}
+
 export interface SignupForm {
   firstName: string;
   lastName: string;

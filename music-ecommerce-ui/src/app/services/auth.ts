@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
-import {AuthDTO, LoginForm, SignupForm} from '../models/auth.model';
+import {AuthDTO, ForgotPasswordForm, LoginForm, ResetPasswordForm, SignupForm} from '../models/auth.model';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -42,4 +42,18 @@ export class Auth {
       responseType: 'text' as 'json',
     });
   }
+
+  forgotPassword(forgotPasswordForm: ForgotPasswordForm): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/forgot-password`, forgotPasswordForm, {
+      responseType: 'text' as 'json',
+    });
+  }
+
+
+  resetPassword(resetPasswordForm: ResetPasswordForm): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/reset-password`, resetPasswordForm, {
+      responseType: 'text' as 'json'
+    });
+  }
+
 }

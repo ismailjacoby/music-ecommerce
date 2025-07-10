@@ -1,7 +1,9 @@
 package com.ismailjacoby.musicecommerceapi.controllers;
 
 import com.ismailjacoby.musicecommerceapi.models.dtos.AuthDTO;
+import com.ismailjacoby.musicecommerceapi.models.forms.ForgotPasswordForm;
 import com.ismailjacoby.musicecommerceapi.models.forms.LoginForm;
+import com.ismailjacoby.musicecommerceapi.models.forms.ResetPasswordForm;
 import com.ismailjacoby.musicecommerceapi.models.forms.SignupForm;
 import com.ismailjacoby.musicecommerceapi.services.AuthService;
 import jakarta.validation.Valid;
@@ -32,4 +34,17 @@ public class AuthController {
         authService.signup(form);
         return ResponseEntity.ok("Signup successful");
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordForm form) {
+        authService.forgotPassword(form);
+        return ResponseEntity.ok("If the email exists, a reset link has been sent.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody @Valid ResetPasswordForm form) {
+        authService.resetPassword(form);
+        return ResponseEntity.ok("Your password has been reset successfully.");
+    }
+
 }

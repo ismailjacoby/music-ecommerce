@@ -1,4 +1,5 @@
 package com.ismailjacoby.musicecommerceapi.security;
+import com.ismailjacoby.musicecommerceapi.exceptions.InvalidTokenException;
 import com.ismailjacoby.musicecommerceapi.models.entities.User;
 import com.ismailjacoby.musicecommerceapi.models.enums.UserRole;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -80,5 +81,26 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(
                 userDetails.getUsername(), null, userDetails.getAuthorities()
         );
+    }
+
+    // Generate Reset Token
+    public String generateResetToken(String email) {
+        return JWT.create()
+                .withSubject(email)
+                .withExpiresAt(Instant.now().plusSeconds(15 * 60)) // 15 minutes
+                .sign(Algorithm.HMAC512(JWT_SECRET));
+    }
+
+    // Validate Reset Token
+    public String validateResetToken(String token) {
+        try {
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(JWT_SECRET))
+                    .acceptExpiresAt(900) // 15 mins
+                    .build()
+                    .verify(token);
+            return jwt.getSubject(); // Email
+        } catch (JWTVerificationException ex) {
+            throw new InvalidTokenException("Invalid or expired reset token.");
+        }
     }
 }

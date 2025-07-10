@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {Auth} from '../../../services/auth';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +19,9 @@ export class ForgotPassword implements OnInit{
 
   forgotPasswordForm: FormGroup = new FormGroup({});
 
+  authService = inject(Auth);
   formBuilder = inject(FormBuilder);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({
@@ -26,5 +29,19 @@ export class ForgotPassword implements OnInit{
     })
   }
 
-  forgotPassword(){}
+  forgotPassword() {
+    if (this.forgotPasswordForm.invalid) return;
+
+    this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
+      next: (response) => {
+        this.successMessage = response;
+        this.errorMessage = '';
+        this.forgotPasswordForm.reset();
+      },
+      error: (error) => {
+        this.errorMessage = error.error.message || 'Something went wrong.';
+        this.successMessage = '';
+      }
+    });
+  }
 }

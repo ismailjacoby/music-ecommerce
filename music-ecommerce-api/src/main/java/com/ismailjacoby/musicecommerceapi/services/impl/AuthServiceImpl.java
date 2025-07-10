@@ -5,7 +5,9 @@ import com.ismailjacoby.musicecommerceapi.exceptions.NotFoundException;
 import com.ismailjacoby.musicecommerceapi.models.dtos.AuthDTO;
 import com.ismailjacoby.musicecommerceapi.models.entities.User;
 import com.ismailjacoby.musicecommerceapi.models.enums.UserRole;
+import com.ismailjacoby.musicecommerceapi.models.forms.ForgotPasswordForm;
 import com.ismailjacoby.musicecommerceapi.models.forms.LoginForm;
+import com.ismailjacoby.musicecommerceapi.models.forms.ResetPasswordForm;
 import com.ismailjacoby.musicecommerceapi.models.forms.SignupForm;
 import com.ismailjacoby.musicecommerceapi.repositories.UserRepository;
 import com.ismailjacoby.musicecommerceapi.security.JwtProvider;
@@ -86,6 +88,30 @@ public class AuthServiceImpl implements AuthService {
         user.setRole(UserRole.CUSTOMER);
         user.setActive(true);
 
+        userRepository.save(user);
+    }
+
+    @Override
+    public void forgotPassword(ForgotPasswordForm form) {
+        String email = form.email().trim().toLowerCase();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("No account found with that email."));
+
+        String token = jwtProvider.generateResetToken(user.getEmail());
+
+        // TODO: Send email
+        System.out.println("RESET LINK: https://your-frontend.com/reset-password?token=" + token);
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordForm form) {
+        String email = jwtProvider.validateResetToken(form.token());
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found."));
+
+        user.setPassword(passwordEncoder.encode(form.password().trim()));
         userRepository.save(user);
     }
 }
