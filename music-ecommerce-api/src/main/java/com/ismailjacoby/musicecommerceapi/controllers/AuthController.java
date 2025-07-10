@@ -23,6 +23,8 @@ public class AuthController {
         this.authService = authService;
     }
 
+    // Authentication
+
     @PostMapping("login")
     public ResponseEntity<AuthDTO> login(@RequestBody @Valid LoginForm form) {
         AuthDTO authDTO = authService.login(form);
@@ -34,6 +36,8 @@ public class AuthController {
         authService.signup(form);
         return ResponseEntity.ok("Signup successful");
     }
+
+    // Password Management
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordForm form) {

@@ -34,6 +34,8 @@ public class AuthServiceImpl implements AuthService {
         this.jwtProvider = jwtProvider;
     }
 
+    // Authentication
+
     @Override
     public AuthDTO login(LoginForm form) {
         if(form == null) {
@@ -90,6 +92,8 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
     }
+
+    // Password Management
 
     @Override
     public void forgotPassword(ForgotPasswordForm form) {

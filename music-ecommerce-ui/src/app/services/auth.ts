@@ -16,6 +16,8 @@ export class Auth {
 
   isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
 
+  // Authentication
+
   login(loginForm: LoginForm): Observable<AuthDTO>{
     return this.http.post<AuthDTO>(`${this.apiUrl}/login`, loginForm).pipe(
       tap((authDTO) => {
@@ -42,6 +44,8 @@ export class Auth {
       responseType: 'text' as 'json',
     });
   }
+
+  // Password Management
 
   forgotPassword(forgotPasswordForm: ForgotPasswordForm): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/forgot-password`, forgotPasswordForm, {

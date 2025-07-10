@@ -1,3 +1,11 @@
+// Enums
+export enum UserRole {
+  ADMIN,
+  STAFF,
+  CUSTOMER
+}
+
+// Authentication
 export interface AuthDTO {
   username: string,
   token: string,
@@ -9,6 +17,15 @@ export interface LoginForm {
   password: string
 }
 
+export interface SignupForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+}
+
+// Password Management
 export interface ForgotPasswordForm {
   email: string
 }
@@ -18,16 +35,5 @@ export interface ResetPasswordForm {
   password: string
 }
 
-export interface SignupForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phoneNumber: string;
-}
 
-export enum UserRole {
-  ADMIN,
-  STAFF,
-  CUSTOMER
-}
+
